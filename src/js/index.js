@@ -22,6 +22,8 @@ navToggler.addEventListener("click", function () {
   }
 });
 
+// Slider
+
 class Slider {
   constructor() {
     this.init();
@@ -97,7 +99,7 @@ class Slider {
 
 const slider = new Slider();
 
-// search results - warning! this function takes array as a parameter
+// Search results
 
 const searchReasultsBox = document.getElementById("search-results");
 
@@ -146,6 +148,35 @@ const setResults = searchResults => {
   });
 };
 
+// Searching by name
+
+const searchByNameInput = document.getElementById("search-by-name-input");
+const searchByNameBtn = document.getElementById("search-by-name-btn");
+
+searchByNameBtn.addEventListener("click", () =>
+  fetchBeerByName(searchByNameInput.value)
+);
+
+function fetchBeerByName(beerProperty) {
+  fetch("https://api.punkapi.com/v2/beers?page=1&per_page=80")
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      let results = [];
+      data.filter(beer => {
+          const name = beer.name.toLowerCase();
+          if(name.includes(beerProperty.toLowerCase())){
+              results.push(beer);
+          }
+      })
+      setResults(results);
+    })
+    .catch(error => {
+      console.log("Error!", error);
+    });
+}
+
 //Searching by description
 
 const searchByDescriptionInput = document.getElementById(
@@ -165,35 +196,16 @@ function fetchBeers(beerProperty) {
       return response.json();
     })
     .then(data => {
-      let results = [];
-      data.filter(beer => {
-        const description = beer.description.toLowerCase();
-        if (description.includes(beerProperty.toLowerCase())) {
-          results.push(beer);
-        }
-      });
-      setResults(results);
-    })
-    .catch(error => {
-      console.log("Błąd!", error);
-    });
-}
-
-// this fetch is needed in searching by name
-
-//  choosenBeerName - name put in input by user
-
-function fetchBeerByName(choosenBeerName) {
-  fetch(`https://api.punkapi.com/v2/beers?beer_name=${choosenBeerName}`)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      //add here what we want to do with data
-    })
-    .catch(error => {
-      console.log("Błąd!", error);
+        let results = [];
+        data.filter(beer => {
+            const description = beer.description.toLowerCase();
+            if(description.includes(beerProperty.toLowerCase())){
+                results.push(beer);
+            }
+        })
+        setResults(results);
+    }).catch( error => {
+        console.log('Error', error);
     });
 }
 
@@ -281,11 +293,10 @@ function fetchBeerByAbv(choosenMinAbvValue, choosenMaxAbvValue) {
     .then(response => {
       return response.json();
     })
-    .then(data => {
-      setResults(data);
-    })
-    .catch(error => {
-      console.log("Błąd!", error);
+    .then(data => { 
+        setResults(data);
+    }).catch( error => {
+        console.log('Error!', error);
     });
 }
 
