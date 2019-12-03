@@ -1,20 +1,20 @@
-import '../assets/style.css';
+import "../assets/style.css";
 import "slick-carousel";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // Imports for range sliders used in ABV, IBU search
-import * as noUiSlider from 'nouislider/distribute/nouislider.js';
-import 'nouislider/distribute/nouislider.css';
+import * as noUiSlider from "nouislider/distribute/nouislider.js";
+import "nouislider/distribute/nouislider.css";
 
 // header hamburger menu behavior
-const navInner = document.getElementById('nav-inner');
-const navToggler = document.getElementById('nav-toggler');
-const navTitle = document.getElementById('nav-title');
+const navInner = document.getElementById("nav-inner");
+const navToggler = document.getElementById("nav-toggler");
+const navTitle = document.getElementById("nav-title");
 
-navToggler.addEventListener('click', function() {
-  navInner.classList.toggle('active');
-  navToggler.classList.toggle('open');
+navToggler.addEventListener("click", function () {
+  navInner.classList.toggle("active");
+  navToggler.classList.toggle("open");
   if (navTitle.innerText === "I feel like searching for a beer by...") {
     navTitle.innerText = "";
   } else {
@@ -62,7 +62,12 @@ class Slider {
       frag.appendChild(subtitle);
 
       const description = document.createElement("p");
-      description.innerText = beers[i].description;
+      const decriptionFull = beers[i].description.split(" ");
+      const decriptionShort =
+        decriptionFull.length < 40 ?
+        decriptionFull.join(" ") :
+        decriptionFull.slice(0, 40).join(" ") + "...";
+      description.innerText = decriptionShort;
       description.classList.add("slider__item-description");
       frag.appendChild(description);
 
@@ -71,12 +76,14 @@ class Slider {
   }
 
   showSlider() {
-    $(document).ready(function() {
+    $(document).ready(function () {
       $(".slider").slick({
         autoplay: true,
         speed: 1000,
         autoplaySpeed: 2000,
-        dots: true
+        dots: true,
+        prevArrow: '<div class="slider__arrow-prev"><i class="fas fa-chevron-left fa-3x"></div>',
+        nextArrow: '<div class="slider__arrow-next"><i class="fas fa-chevron-right fa-3x"></div>'
       });
     });
   }
@@ -92,27 +99,29 @@ const slider = new Slider();
 
 // search results - warning! this function takes array as a parameter
 
-const searchReasultsBox = document.getElementById('search-results');
+const searchReasultsBox = document.getElementById("search-results");
 
 const setResults = searchResults => {
-    searchReasultsBox.innerHTML = null;
-    searchResults.map(result => {
-        const {
-            name,
-            image_url,
-            abv,
-            ibu,
-            tagline,
-            description,
-            food_pairing
-        } = result;
+  searchReasultsBox.innerHTML = null;
+  searchResults.map(result => {
+    const {
+      name,
+      image_url,
+      abv,
+      ibu,
+      tagline,
+      description,
+      food_pairing
+    } = result;
 
-        const searchResultItem = document.createElement('li');
-        const foodPairingList = food_pairing.map((food) => {
-            return `<li class="search-results__food-list-item">${food}</li>`;
-        }).join('');
-        
-        const searchResultContent = `
+    const searchResultItem = document.createElement("li");
+    const foodPairingList = food_pairing
+      .map(food => {
+        return `<li class="search-results__food-list-item">${food}</li>`;
+      })
+      .join("");
+
+    const searchResultContent = `
             <div class="search-results__img-wrapper">
                 <img class="search-results__img" src= ${image_url} />
             </div>
@@ -130,12 +139,12 @@ const setResults = searchResults => {
                 </div>
             </div>
         `;
-        
-        searchResultItem.innerHTML = searchResultContent;
-        searchResultItem.classList.add("search-results__item");
-        searchReasultsBox.appendChild(searchResultItem);
-    });
-}
+
+    searchResultItem.innerHTML = searchResultContent;
+    searchResultItem.classList.add("search-results__item");
+    searchReasultsBox.appendChild(searchResultItem);
+  });
+};
 
 //Searching by description
 
@@ -156,16 +165,17 @@ function fetchBeers(beerProperty) {
       return response.json();
     })
     .then(data => {
-        let results = [];
-        data.filter(beer => {
-            const description = beer.description.toLowerCase();
-            if(description.includes(beerProperty.toLowerCase())){
-                results.push(beer);
-            }
-        })
-        setResults(results);
-    }).catch( error => {
-        console.log('Błąd!', error);
+      let results = [];
+      data.filter(beer => {
+        const description = beer.description.toLowerCase();
+        if (description.includes(beerProperty.toLowerCase())) {
+          results.push(beer);
+        }
+      });
+      setResults(results);
+    })
+    .catch(error => {
+      console.log("Błąd!", error);
     });
 }
 
@@ -190,18 +200,18 @@ function fetchBeerByName(choosenBeerName) {
 // Searching by ABV,IBU
 
 // ABV, IBU search - get target elements to make range sliders
-const rangeSliderAbvBar = document.getElementById('range-slider-abv-bar');
-const rangeSliderAbvChoice = document.getElementById('range-slider-abv-choice');
-const searchByAbvBtn = document.getElementById('search-by-abv-btn');
-const rangeSliderIbuBar = document.getElementById('range-slider-ibu-bar');
-const rangeSliderIbuChoice = document.getElementById('range-slider-ibu-choice');
-const searchByIbuBtn = document.getElementById('search-by-ibu-btn');
+const rangeSliderAbvBar = document.getElementById("range-slider-abv-bar");
+const rangeSliderAbvChoice = document.getElementById("range-slider-abv-choice");
+const searchByAbvBtn = document.getElementById("search-by-abv-btn");
+const rangeSliderIbuBar = document.getElementById("range-slider-ibu-bar");
+const rangeSliderIbuChoice = document.getElementById("range-slider-ibu-choice");
+const searchByIbuBtn = document.getElementById("search-by-ibu-btn");
 
 // ABV, IBU search - create variables to store user input from range sliders
-let choosenMinAbvValue, 
-    choosenMaxAbvValue,
-    choosenMinIbuValue,
-    choosenMaxIbuValue;
+let choosenMinAbvValue,
+  choosenMaxAbvValue,
+  choosenMinIbuValue,
+  choosenMaxIbuValue;
 
 // ABV, IBU search - create two range sliders
 noUiSlider.create(rangeSliderAbvBar, {
@@ -225,70 +235,80 @@ noUiSlider.create(rangeSliderIbuBar, {
 
 // ABV, IBU search - create functions to show user search criteria next to range slider
 function showUserAbvChoice(values) {
-    values = values.map(element => {
-        return element
-            .substring(0, element.length-1)
-            .concat('%');
-    });
-    values = values.join(' - ');
-    rangeSliderAbvChoice.innerHTML = `Your choice: ${values}`;
+  values = values.map(element => {
+    return element.substring(0, element.length - 1).concat("%");
+  });
+  values = values.join(" - ");
+  rangeSliderAbvChoice.innerHTML = `Your choice: ${values}`;
 }
+
 function showUserIbuChoice(values) {
-    values = values.map(element => {
-        return element.substring(0, element.length-3);
-    });
-    values = values.join(' - ');
-    rangeSliderIbuChoice.innerHTML = `Your choice: ${values}`;   
+  values = values.map(element => {
+    return element.substring(0, element.length - 3);
+  });
+  values = values.join(" - ");
+  rangeSliderIbuChoice.innerHTML = `Your choice: ${values}`;
 }
 
-// ABV, IBU search - create function to get user input from range sliders to be used in fetch 
+// ABV, IBU search - create function to get user input from range sliders to be used in fetch
 function getUserAbvInputs(values) {
-    choosenMinAbvValue = values[0];
-    choosenMaxAbvValue = values[1];
-    return choosenMinAbvValue, choosenMaxAbvValue;
-};
+  choosenMinAbvValue = values[0];
+  choosenMaxAbvValue = values[1];
+  return choosenMinAbvValue, choosenMaxAbvValue;
+}
+
 function getUserIbuInputs(values) {
-    choosenMinIbuValue = values[0];
-    choosenMaxIbuValue = values[1];
-    return choosenMinIbuValue, choosenMaxIbuValue;
-};
+  choosenMinIbuValue = values[0];
+  choosenMaxIbuValue = values[1];
+  return choosenMinIbuValue, choosenMaxIbuValue;
+}
 
-// ABV, IBU search - listen for update values on range slider, handle them 
-rangeSliderAbvBar.noUiSlider.on('update', (values) => {
-    showUserAbvChoice(values);
-    getUserAbvInputs(values);
+// ABV, IBU search - listen for update values on range slider, handle them
+rangeSliderAbvBar.noUiSlider.on("update", values => {
+  showUserAbvChoice(values);
+  getUserAbvInputs(values);
 });
-rangeSliderIbuBar.noUiSlider.on('update', (values) => {
-    showUserIbuChoice(values);
-    getUserIbuInputs(values);
+rangeSliderIbuBar.noUiSlider.on("update", values => {
+  showUserIbuChoice(values);
+  getUserIbuInputs(values);
 });
 
-// ABV search - create function fetching data and returning array with data 
-function fetchBeerByAbv(choosenMinAbvValue, choosenMaxAbvValue){
-    fetch(`https://api.punkapi.com/v2/beers?abv_gt=${choosenMinAbvValue}&abv_lt=${choosenMaxAbvValue}`)
+// ABV search - create function fetching data and returning array with data
+function fetchBeerByAbv(choosenMinAbvValue, choosenMaxAbvValue) {
+  fetch(
+      `https://api.punkapi.com/v2/beers?abv_gt=${choosenMinAbvValue}&abv_lt=${choosenMaxAbvValue}`
+    )
     .then(response => {
       return response.json();
     })
-    .then(data => { 
-        setResults(data);
-    }).catch( error => {
-        console.log('Błąd!', error);
+    .then(data => {
+      setResults(data);
+    })
+    .catch(error => {
+      console.log("Błąd!", error);
     });
 }
 
-// IBU search - create function fetching data and returning array with data 
-function fetchBeerByIbu(choosenMinIbuValue, choosenMaxIbuValue){
-    fetch(`https://api.punkapi.com/v2/beers?ibu_gt=${choosenMinIbuValue}&ibu_lt=${choosenMaxIbuValue}`)
+// IBU search - create function fetching data and returning array with data
+function fetchBeerByIbu(choosenMinIbuValue, choosenMaxIbuValue) {
+  fetch(
+      `https://api.punkapi.com/v2/beers?ibu_gt=${choosenMinIbuValue}&ibu_lt=${choosenMaxIbuValue}`
+    )
     .then(response => {
       return response.json();
     })
-    .then(data => { 
-        setResults(data);
-    }).catch( error => {
-        console.log('Error!', error);
+    .then(data => {
+      setResults(data);
+    })
+    .catch(error => {
+      console.log("Error!", error);
     });
-};
+}
 
-// ABV, IBU search - listen for user to click search button and call fetch functions 
-searchByAbvBtn.addEventListener('click', () => fetchBeerByAbv(choosenMinAbvValue, choosenMaxAbvValue));
-searchByIbuBtn.addEventListener('click', () => fetchBeerByIbu(choosenMinIbuValue, choosenMaxIbuValue));
+// ABV, IBU search - listen for user to click search button and call fetch functions
+searchByAbvBtn.addEventListener("click", () =>
+  fetchBeerByAbv(choosenMinAbvValue, choosenMaxAbvValue)
+);
+searchByIbuBtn.addEventListener("click", () =>
+  fetchBeerByIbu(choosenMinIbuValue, choosenMaxIbuValue)
+);
