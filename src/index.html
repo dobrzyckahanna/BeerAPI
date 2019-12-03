@@ -1,9 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/BeerAPI/src/assets/style.css">
+  <title>Beer Finder App</title>
+</head>
+<body>
 
+  <header class="header">
+    <div class="header-logo">
+      <div class="header-logo-image">
+        <img class="header-logo-image__img" src="">
+      </div>
+    </div>
+    <div class="header-welcome">
+      <h1 class="header-welcome__title">The Beer Finder App</h1>
+      <h2 class="header-welcome__subtitle">We know everything about beers!</h2>
+      <nav class="nav">
+        <h2 class="nav__title">I feel like searching for a beer by...</h2>
+        <div class="nav-inner">
+          <ul class="nav-inner-items">
+            <li><a href="#">NAME</a></li>
+            <li><a href="#">DESCRIPTION</a></li>
+            <li><a href="#">BITERNESS (IBU)</a></li>
+            <li><a href="#">ALCOHOL VOLUME (ABV)</a></li>
+          </ul>
+          <div class="nav-inner-toggler">
+            <span class="nav-inner-toggler__bar"></span>
+            <span class="nav-inner-toggler__bar"></span>
+            <span class="nav-inner-toggler__bar"></span>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
 
   <main>
-
-    <div class="container">
-
     <div class="container-bubble">
 
       <div class="bubbles-container">
@@ -90,102 +124,36 @@
               </g>
           </g>
       </svg>
-      <section class="introduction">
-        <h2 class="introduction__title">We get it, you love beer! </h2>
-        <p class="introduction__text">You will have a cold one any chance you get. But how much do you actually know
-          about beers? Check out our new app to learn everything about your favorite drink!</p>
-      </section>
-
-      <section class="slider">
-        <div class="slider__item-1 slide">
-          <div class="slider__item-content"></div>
-        </div>
-        <div class="slider__item-2 slide is-hidden">
-          <div class="slider__item-content"></div>
-        </div>
-        <div class="slider__item-3 slide is-hidden">
-          <div class="slider__item-content"></div>
-        </div>
-      </section>
-
-      <section class="searchers">
-        <h2 class="searchers__title">Search For The Beer</h2>
-        <ul class="searchers__wrapper">
-           <li class="search-type">
-            <input type="radio" checked name="search" class="search-type__radio" id="name"/>
-            <label id="search-by-name" for="name" class="search-type__box search-by-name">
-              <h3 class="search-by-name__title">Search beer by name</h3>
-              <input id="search-by-name-input" type="text" class="search-by-name__input"/>
-              <button id="search-by-name-btn" class="search-by-name__btn">Search</button>
-            </label>
-          </li>
-          <li class="search-type">
-            <input type="radio" checked name="search" class="search-type__radio" id="description" />
-            <label id="search-by-description" for="description" class="search-type__box search-by-description">
-              <h3 class="search-by-description__title">Search beer by description</h3>
-              <input id="search-by-description-input" type="text" class="search-by-description__input" />
-              <button id="search-by-description-btn" class="search-by-description__btn">Search</button>
-            </label>
-          </li>
-          <li class="search-type">
-            <input type="radio" name="search" class="search-type__radio" id="abv" />
-            <label id="search-by-abv" for="abv" class="search-type__box range-slider">
-              <h3 class="range-slider__title">Alcohol by volume</h3>
-              <div class="range-slider-bar-with-choice">
-                <div id="range-slider-abv-choice" class="range-slider__choice"></div>
-                <div id="range-slider-abv-bar" class="range-slider__bar"></div>
-              </div>
-              <button id="search-by-abv-btn" class="range-slider__btn">Search</button>
-            </label>
-          </li>
-          <li class="search-type">
-            <input type="radio" name="search" class="search-type__radio" id="ibu" />
-            <label id="search-by-ibu" for="ibu" class="search-type__box range-slider">
-              <h3 class="range-slider__title">International Bittering Units</h3>
-              <div class="range-slider-bar-with-choice">
-                <div id="range-slider-ibu-choice" class="range-slider__choice"></div>
-                <div id="range-slider-ibu-bar" class="range-slider__bar"></div>
-              </div>
-              <button id="search-by-ibu-btn" class="range-slider__btn">Search</button>
-            </label>
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <ul id="search-results" class="search-results"></ul>
-      </section>
-
+      </div>
+  
+    <div id="search-by-description">
+      <h3>Search beer by description</h3>
+      <input id="search-by-description-input" type="text"/>
+      <button id="search-by-description-btn">Search</button>
     </div>
+
+    <ul id="search-results"></ul>
+  </div>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div class="footer-about">
-        <p class="footer-about__message">This app was created as CodersCamp 2019 project by a team from Warsaw Group.
-        </p>
-        <p class="footer-about__message">We have chosen using <span>Punk API</span> to create an app for beer lovers.
-        </p>
-        <p class="footer-about__message">No beer <i class="footer-about__icon fas fa-beer"></i> has been harmed during
-          the development of this application</p>
-        <div class="footer-about-links">
-          <a class="footer-about__link" href="https://punkapi.com/">Punk API</a>
-          <a class="footer-about__link" href="https://coderscamp.edu.pl/">CodersCamp</a>
-          <a class="footer-about__link" href="https://github.com/dobrzyckahanna/BeerAPI">Source code</a>
-        </div>
+    <div class="footer-about">
+      <p class="footer-about__message">This app was created as CodersCamp 2019 project by a team from Warsaw Group. We have chosen using Punk API to create an app for beer lovers.</p>
+      <p class="footer-about__message">No beer <i class="footer-about__icon fas fa-beer"></i> has been harmed during the development of this application</p>
+      <div class="footer-about-links">
+        <a class="footer-about__link" href="https://punkapi.com/">Punk API</a>
+        <a class="footer-about__link" href="https://coderscamp.edu.pl/">CodersCamp</a>
+        <a class="footer-about__link" href="https://github.com/dobrzyckahanna/BeerAPI">Source code</a>
       </div>
-      <div class="footer-media">
-        <p class="footer-media__message">This app in social media:</p>
-        <div class="footer-media-links">
-          <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-facebook-f"></i></a>
-          <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-twitter"></i></a>
-          <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-linkedin"></i></a>
-          <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-github"></i></a>
-        </div>
-      </div>
+    </div>
+    <div class="footer-media">
+      <p class="footer-media__message">This app in social media:</p>
+      <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-facebook-f"></i></a>
+      <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-twitter"></i></a>
+      <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-linkedin"></i></a>
+      <a class="footer-media__link" href="#"><i class="footer-media__icon fab fa-github"></i></a>
     </div>
   </footer>
 
 </body>
-
 </html>

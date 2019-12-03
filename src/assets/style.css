@@ -1,2 +1,49 @@
-
+@import url("https://fonts.googleapis.com/css?family=Calistoga|Open+Sans&display=swap");
 @import '/BeerAPI/src/assets/animations/bubble.css';
+
+:root {
+  --f-special: "Calistoga", cursive;
+  --f-default: "Open Sans", sans-serif;
+  --c-main: #ffd700;
+  --c-secondary: #ff9305;
+  --c-accent: #ae9670;
+  --c-neutral-light: #dedede;
+  --c-neutral-mid-light: #a9a9a9;
+  --c-neutral-mid-dark: #545454;
+  --c-neutral-dark: #333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+  font-family: var(--f-default);
+  color: var(--c-neutral-dark);
+  line-height: 1.45;
+}
+
+h1 {
+  font-size: 3.2rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 1.9rem;
+}
+
+h4 {
+  font-size: 1.6rem;
+}
+
+h5 {
+  font-size: 1.4rem;
+}
+
